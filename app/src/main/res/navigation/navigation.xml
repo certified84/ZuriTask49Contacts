@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.certified.zuritask49contacts.screens.contacts.ContactsFragment"
+        android:name="com.certified.zuritask49contacts.screens.category.CategoryFragment"
         android:label="fragment_contacts"
-        tools:layout="@layout/fragment_contacts" />
+        tools:layout="@layout/fragment_category" />
     <fragment
         android:id="@+id/colleaguesFragment"
         android:name="com.certified.zuritask49contacts.screens.colleagues.ColleaguesFragment"

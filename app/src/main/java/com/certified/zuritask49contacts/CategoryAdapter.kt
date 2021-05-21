@@ -5,26 +5,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.certified.zuritask49contacts.databinding.ListItemCategoryBinding
 import com.certified.zuritask49contacts.databinding.ListItemContactBinding
 import com.certified.zuritask49contacts.room.Contact
 
-class ContactAdapter : ListAdapter<Contact, ContactAdapter.ViewHolder>(diffCallback) {
+class CategoryAdapter(val categories: List<Category>) : ListAdapter<Category, CategoryAdapter.ViewHolder>(diffCallback) {
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<Contact>() {
-            override fun areItemsTheSame(oldItem: Contact, newItem: Contact) =
-                oldItem.id == newItem.id
+        private val diffCallback = object : DiffUtil.ItemCallback<Category>() {
+            override fun areItemsTheSame(oldItem: Category, newItem: Category) = false
 
             override fun areContentsTheSame(
-                oldItem: Contact,
-                newItem: Contact
+                oldItem: Category,
+                newItem: Category
             ): Boolean = oldItem == newItem
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ListItemContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ListItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -36,11 +36,11 @@ class ContactAdapter : ListAdapter<Contact, ContactAdapter.ViewHolder>(diffCallb
         }
     }
 
-    inner class ViewHolder(private val binding: ListItemContactBinding) :
+    inner class ViewHolder(private val binding: ListItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(contact: Contact) {
-            binding.contact = contact
+        fun bind(category: Category) {
+            binding.category = category
             binding.executePendingBindings()
         }
     }

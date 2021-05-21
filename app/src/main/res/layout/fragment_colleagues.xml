@@ -27,18 +27,5 @@
             app:listData="@{viewModel.contacts}"
             tools:listitem="@layout/list_item_contact" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            app:tint="@color/white"
-            android:contentDescription="@string/add_contact_button"
-            android:backgroundTint="@color/design_default_color_primary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_add" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

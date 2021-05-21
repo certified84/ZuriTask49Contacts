@@ -1,32 +1,29 @@
 package com.certified.zuritask49contacts.screens.colleagues
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.certified.zuritask49contacts.Contact
+import androidx.lifecycle.*
+import com.certified.zuritask49contacts.room.Contact
+import com.certified.zuritask49contacts.room.ContactsDao
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ColleaguesViewModel(private val contactList: List<Contact>) : ViewModel(){
+class ColleaguesViewModel(
+    private val database: ContactsDao,
+    application: Application) : AndroidViewModel(application) {
 
-    private val _contacts = MutableLiveData<List<Contact>>()
-    val contacts: LiveData<List<Contact>>
-        get() = _contacts
+    val contacts = database.getContactsByCategory("Colleagues")
 
-    init {
-        getCharacters()
+    private suspend fun updateContact(contact: Contact) {
+        withContext(Dispatchers.IO) {
+            database.updateContact(contact)
+        }
     }
 
-    private fun getCharacters() {
-        viewModelScope.launch {
-            try {
-                _contacts.value = contactList
-
-            } catch (e: Exception) {
-                //                Toast.makeText(coroutineContext, "An error occurred", Toast.LENGTH_LONG).show()
-                Log.e("ViewModel", "getCharacters: An error occurred. ${e.message}")
-            }
+    private suspend fun deleteContact(contact: Contact) {
+        withContext(Dispatchers.IO) {
+            database.deleteContact(contact)
         }
     }
 }
