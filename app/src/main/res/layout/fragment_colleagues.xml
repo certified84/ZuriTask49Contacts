@@ -24,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:listData="@{viewModel.contacts}"
+            app:contactList="@{viewModel.contacts}"
             tools:listitem="@layout/list_item_contact" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

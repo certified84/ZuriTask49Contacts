@@ -3,31 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/colleaguesFragment">
+    app:startDestination="@id/categoryFragment">
 
     <fragment
-        android:id="@+id/contactsFragment"
+        android:id="@+id/categoryFragment"
         android:name="com.certified.zuritask49contacts.screens.category.CategoryFragment"
-        android:label="fragment_contacts"
+        android:label="Category"
         tools:layout="@layout/fragment_category" />
     <fragment
         android:id="@+id/colleaguesFragment"
         android:name="com.certified.zuritask49contacts.screens.colleagues.ColleaguesFragment"
-        android:label="fragment_colleagues"
+        android:label="Colleagues"
         tools:layout="@layout/fragment_colleagues" />
     <fragment
         android:id="@+id/familyFragment"
         android:name="com.certified.zuritask49contacts.screens.family.FamilyFragment"
-        android:label="fragment_family"
+        android:label="Family"
         tools:layout="@layout/fragment_family" />
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.certified.zuritask49contacts.screens.friends.FriendsFragment"
-        android:label="fragment_friends"
+        android:label="Friends"
         tools:layout="@layout/fragment_friends" />
     <fragment
         android:id="@+id/tutorsFragment"
         android:name="com.certified.zuritask49contacts.screens.tutors.TutorsFragment"
-        android:label="fragment_tutors"
+        android:label="Tutors"
         tools:layout="@layout/fragment_tutors" />
 </navigation>

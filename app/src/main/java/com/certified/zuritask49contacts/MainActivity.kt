@@ -5,7 +5,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.certified.zuritask49contacts.databinding.ActivityMainBinding
 import com.certified.zuritask49contacts.databinding.DialogNewContactBinding
 import com.certified.zuritask49contacts.room.Contact
@@ -15,11 +21,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        navController = Navigation.findNavController(this, R.id.main_nav_host_fragment)
+        setupActionBarWithNavController(this, navController)
+        appBarConfiguration = AppBarConfiguration(navController.graph, null)
 
         val bottomSheet = layoutInflater.inflate(R.layout.dialog_new_contact, null)
         val binding1 = DialogNewContactBinding.inflate(
@@ -45,9 +56,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         categoryList.add("Select a category")
-        categoryList.add("Colleagues")
         categoryList.add("Family")
         categoryList.add("Friends")
+        categoryList.add("Colleagues")
         categoryList.add("Tutors")
 
         adapterCategory.notifyDataSetChanged()
@@ -85,5 +96,9 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
 }

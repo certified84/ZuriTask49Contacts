@@ -1,19 +1,21 @@
-package com.certified.zuritask49contacts
+package com.certified.zuritask49contacts.screens.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.certified.zuritask49contacts.Category
 import com.certified.zuritask49contacts.databinding.ListItemCategoryBinding
-import com.certified.zuritask49contacts.databinding.ListItemContactBinding
-import com.certified.zuritask49contacts.room.Contact
 
-class CategoryAdapter(val categories: List<Category>) : ListAdapter<Category, CategoryAdapter.ViewHolder>(diffCallback) {
+class CategoryAdapter() : ListAdapter<Category, CategoryAdapter.ViewHolder>(diffCallback) {
+
+    private lateinit var listener: OnCategoryClickedListener
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Category>() {
-            override fun areItemsTheSame(oldItem: Category, newItem: Category) = false
+            override fun areItemsTheSame(oldItem: Category, newItem: Category) =
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(
                 oldItem: Category,
@@ -43,5 +45,26 @@ class CategoryAdapter(val categories: List<Category>) : ListAdapter<Category, Ca
             binding.category = category
             binding.executePendingBindings()
         }
+
+        init {
+            (binding.root).setOnClickListener{
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onClick(getItem(position))
+                }
+            }
+        }
     }
+
+    fun setOnCategoryClickedListener(listener: OnCategoryClickedListener) {
+        this.listener = listener
+    }
+
+    interface OnCategoryClickedListener {
+        fun onClick(category: Category)
+    }
+}
+
+class CategoryClickListener(val clickListener: (id: Int) -> Unit) {
+    fun onClick(category: Category) = clickListener(category.id)
 }
