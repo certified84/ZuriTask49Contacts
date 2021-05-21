@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.certified.zuritask49contacts.Category
 import com.certified.zuritask49contacts.databinding.ListItemCategoryBinding
 
-class CategoryAdapter() : ListAdapter<Category, CategoryAdapter.ViewHolder>(diffCallback) {
+class CategoryAdapter : ListAdapter<Category, CategoryAdapter.ViewHolder>(diffCallback) {
 
     private lateinit var listener: OnCategoryClickedListener
 
@@ -47,7 +47,7 @@ class CategoryAdapter() : ListAdapter<Category, CategoryAdapter.ViewHolder>(diff
         }
 
         init {
-            (binding.root).setOnClickListener{
+            (binding.root).setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     listener.onClick(getItem(position))

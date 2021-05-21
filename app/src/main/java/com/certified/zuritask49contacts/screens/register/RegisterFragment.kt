@@ -1,6 +1,5 @@
 package com.certified.zuritask49contacts.screens.register
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,12 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.certified.zuritask49contacts.Category
 import com.certified.zuritask49contacts.R
 import com.certified.zuritask49contacts.databinding.FragmentRegisterBinding
 import com.certified.zuritask49contacts.room.ContactDatabase
 import com.certified.zuritask49contacts.room.Credential
-import com.certified.zuritask49contacts.screens.category.CategoryAdapter
 
 class RegisterFragment : Fragment(), View.OnClickListener {
 
@@ -46,7 +43,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 this, viewModelFactory
             ).get(RegisterViewModel::class.java)
 
-        binding?.apply{
+        binding?.apply {
             btnSignUp.setOnClickListener(this@RegisterFragment)
             tvForgotPassword.setOnClickListener(this@RegisterFragment)
             tvLogin.setOnClickListener(this@RegisterFragment)
@@ -61,10 +58,14 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        binding?.apply{
+        binding?.apply {
             when (v) {
                 tvLogin -> navController.navigate(R.id.loginFragment)
-                tvForgotPassword  -> Toast.makeText(context, "Check back in a bit", Toast.LENGTH_LONG).show()
+                tvForgotPassword -> Toast.makeText(
+                    context,
+                    "Check back in a bit",
+                    Toast.LENGTH_LONG
+                ).show()
                 btnSignUp -> {
                     val email = etEmail.text.toString().trim()
                     val password = etPassword.text.toString().trim()
@@ -80,7 +81,8 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                         val handler = Handler(Looper.myLooper()!!)
                         handler.postDelayed({
                             progressBar.visibility = View.GONE
-                            Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG)
+                                .show()
                             navController.navigate(R.id.loginFragment)
                         }, 3000L)
                     } else {

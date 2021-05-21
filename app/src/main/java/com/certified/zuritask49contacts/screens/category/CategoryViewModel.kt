@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.certified.zuritask49contacts.Category
 import kotlinx.coroutines.launch
 
-class CategoryViewModel(private val categoryList: List<Category>) : ViewModel(){
+class CategoryViewModel(private val categoryList: List<Category>) : ViewModel() {
 
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>>

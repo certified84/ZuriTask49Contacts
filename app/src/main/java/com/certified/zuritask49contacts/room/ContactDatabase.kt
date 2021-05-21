@@ -8,7 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Contact::class, Credential::class], version = 1, exportSchema = false)
+@Database(entities = [Contact::class, Credential::class], version = 3, exportSchema = false)
 abstract class ContactDatabase : RoomDatabase() {
 
     abstract val contactsDao: ContactsDao
@@ -23,14 +23,9 @@ abstract class ContactDatabase : RoomDatabase() {
                 super.onCreate(db)
                 val contactsDao = INSTANCE?.contactsDao
                 GlobalScope.launch {
-//                    insertCredential(contactsDao)
                     contactsDao?.insertCredential(Credential("", ""))
                 }
             }
-        }
-
-        private suspend fun insertCredential(contactsDao: ContactsDao?) {
-            contactsDao?.insertCredential(Credential("", ""))
         }
 
         fun getInstance(context: Context): ContactDatabase {
