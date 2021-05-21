@@ -4,11 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-@Database(entities = [Contact::class, Credential::class], version = 3, exportSchema = false)
+@Database(entities = [Contact::class], version = 1, exportSchema = false)
 abstract class ContactDatabase : RoomDatabase() {
 
     abstract val contactsDao: ContactsDao
@@ -16,17 +13,6 @@ abstract class ContactDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: ContactDatabase? = null
-
-
-        private val roomCallback: Callback = object : Callback() {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-                val contactsDao = INSTANCE?.contactsDao
-                GlobalScope.launch {
-                    contactsDao?.insertCredential(Credential("", ""))
-                }
-            }
-        }
 
         fun getInstance(context: Context): ContactDatabase {
             synchronized(this) {
@@ -38,7 +24,6 @@ abstract class ContactDatabase : RoomDatabase() {
                         "contacts_database"
                     )
                         .fallbackToDestructiveMigration()
-                        .addCallback(roomCallback)
                         .build()
                     INSTANCE = instance
                 }
