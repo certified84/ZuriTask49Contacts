@@ -3,31 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/categoryFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.certified.zuritask49contacts.screens.category.CategoryFragment"
-        android:label="Category"
-        tools:layout="@layout/fragment_category" />
+        android:id="@+id/loginFragment"
+        android:name="com.certified.zuritask49contacts.screens.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+
     <fragment
-        android:id="@+id/colleaguesFragment"
-        android:name="com.certified.zuritask49contacts.screens.colleagues.ColleaguesFragment"
-        android:label="Colleagues"
-        tools:layout="@layout/fragment_colleagues" />
+        android:id="@+id/registerFragment"
+        android:name="com.certified.zuritask49contacts.screens.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+
     <fragment
-        android:id="@+id/familyFragment"
-        android:name="com.certified.zuritask49contacts.screens.family.FamilyFragment"
-        android:label="Family"
-        tools:layout="@layout/fragment_family" />
-    <fragment
-        android:id="@+id/friendsFragment"
-        android:name="com.certified.zuritask49contacts.screens.friends.FriendsFragment"
-        android:label="Friends"
-        tools:layout="@layout/fragment_friends" />
-    <fragment
-        android:id="@+id/tutorsFragment"
-        android:name="com.certified.zuritask49contacts.screens.tutors.TutorsFragment"
-        android:label="Tutors"
-        tools:layout="@layout/fragment_tutors" />
+        android:id="@+id/contactsFragment"
+        android:name="com.certified.zuritask49contacts.screens.contacts.ContactsFragment"
+        android:label="jay"
+        tools:layout="@layout/fragment_contacts" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.certified.zuritask49contacts.screens.colleagues
+package com.certified.zuritask49contacts.screens.contacts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.certified.zuritask49contacts.ContactAdapter
 import com.certified.zuritask49contacts.R
-import com.certified.zuritask49contacts.databinding.FragmentColleaguesBinding
+import com.certified.zuritask49contacts.databinding.FragmentContactsBinding
 import com.certified.zuritask49contacts.room.ContactDatabase
 
-class ColleaguesFragment : Fragment() {
+class ContactsFragment : Fragment() {
 
-    private var binding: FragmentColleaguesBinding? = null
+    private var binding: FragmentContactsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,19 +23,19 @@ class ColleaguesFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_colleagues, container, false
+            inflater, R.layout.fragment_contacts, container, false
         )
 
         val application = requireNotNull(this.activity).application
 
         val dataSource = ContactDatabase.getInstance(application).contactsDao
 
-        val viewModelFactory = ColleaguesViewModelFactory(dataSource, application)
+        val viewModelFactory = ContactsViewModelFactory(dataSource, application)
 
         val colleagueViewModel =
             ViewModelProvider(
                 this, viewModelFactory
-            ).get(ColleaguesViewModel::class.java)
+            ).get(ContactsViewModel::class.java)
 
         val adapter = ContactAdapter()
 

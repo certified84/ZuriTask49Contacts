@@ -22,15 +22,12 @@ class MainActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
     private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         navController = Navigation.findNavController(this, R.id.main_nav_host_fragment)
-        setupActionBarWithNavController(this, navController)
-        appBarConfiguration = AppBarConfiguration(navController.graph, null)
 
         val bottomSheet = layoutInflater.inflate(R.layout.dialog_new_contact, null)
         val binding1 = DialogNewContactBinding.inflate(
@@ -48,38 +45,17 @@ class MainActivity : AppCompatActivity() {
                 this, viewModelFactory
             ).get(MainActivityViewModel::class.java)
 
-        val categoryList = ArrayList<String>()
-        val adapterCategory = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            categoryList
-        )
-
-        categoryList.add("Select a category")
-        categoryList.add("Family")
-        categoryList.add("Friends")
-        categoryList.add("Colleagues")
-        categoryList.add("Tutors")
-
-        adapterCategory.notifyDataSetChanged()
-        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         binding?.fab?.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this)
             binding1.apply {
-                spinnerCategory.adapter = adapterCategory
                 btnAddContact.setOnClickListener {
-                    val category = spinnerCategory.selectedItem.toString()
-                    if (category != "Select a category") {
                         val name = etName.text.toString()
                         val number = etNumber.text.toString()
 
                         if (name.isNotEmpty() && number.isNotEmpty()) {
-                            mainActivityViewModel.insertContact(Contact(name, number, category))
+                            mainActivityViewModel.insertContact(Contact(name, number))
                             bottomSheetDialog.dismiss()
                         }
-                    } else
-                        Toast.makeText(this@MainActivity, "Select a category", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -96,9 +72,5 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
 }
