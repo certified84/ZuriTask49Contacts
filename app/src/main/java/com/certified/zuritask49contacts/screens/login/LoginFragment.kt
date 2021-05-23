@@ -1,5 +1,6 @@
 package com.certified.zuritask49contacts.screens.login
 
+import android.app.Application
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,14 +17,26 @@ import androidx.navigation.Navigation
 import com.certified.zuritask49contacts.R
 import com.certified.zuritask49contacts.databinding.FragmentLoginBinding
 import com.certified.zuritask49contacts.room.ContactDatabase
+import com.certified.zuritask49contacts.room.ContactsDao
 
 class LoginFragment : Fragment(), View.OnClickListener {
 
     private var binding: FragmentLoginBinding? = null
     private lateinit var navController: NavController
     private lateinit var loginViewModel: LoginViewModel
+
+    private lateinit var application: Application
+    private lateinit var dataSource: ContactsDao
+
     private var savedEmail: String? = null
     private var savedPassword: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        application = requireActivity().application
+        dataSource = ContactDatabase.getInstance(application).contactsDao
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,21 +47,12 @@ class LoginFragment : Fragment(), View.OnClickListener {
             inflater, R.layout.fragment_login, container, false
         )
 
-        val application = requireNotNull(this.activity).application
-
-        val dataSource = ContactDatabase.getInstance(application).contactsDao
-
         val viewModelFactory = LoginViewModelFactory(dataSource, application)
 
         loginViewModel =
             ViewModelProvider(
                 this, viewModelFactory
             ).get(LoginViewModel::class.java)
-
-        loginViewModel.credentials.observe(viewLifecycleOwner) {
-            savedEmail = it.email
-            savedPassword = it.password
-        }
 
         binding?.apply {
             btnLogin.setOnClickListener(this@LoginFragment)
@@ -62,6 +66,15 @@ class LoginFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        loginViewModel.credentials.observe(viewLifecycleOwner) {
+            savedEmail = it.email ?: " "
+            savedPassword = it.password ?: " "
+        }
     }
 
     override fun onClick(v: View?) {
@@ -91,9 +104,6 @@ class LoginFragment : Fragment(), View.OnClickListener {
                                     NavOptions.Builder().setPopUpTo(R.id.loginFragment, true)
                                         .build()
                                 navController.navigate(R.id.contactsFragment, null, navOptions)
-
-//                                startActivity(Intent(requireContext(), MainActivity::class.java))
-//                                requireActivity().finish()
                             }, 3000L)
                         } else {
                             etPasswordLayout.error = getString(R.string.error)

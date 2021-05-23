@@ -23,7 +23,7 @@ abstract class ContactDatabase : RoomDatabase() {
                 super.onCreate(db)
                 val contactsDao = INSTANCE?.contactsDao
                 GlobalScope.launch {
-                    contactsDao?.insertCredential(Credential(" ", " "))
+                    contactsDao?.insertCredential(Credential("pass", "pass"))
                 }
             }
         }
